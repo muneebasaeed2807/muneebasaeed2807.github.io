@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muneeba Saeed | Web Developer & CS Student</title>
+  <meta name="description" content="Professional Web Developer specializing in PHP, MySQL, and responsive web design." />
+  <style>
+    :root {
+      --indigo:  #a21caf;
+      --indigo2: #7e22ce;
+      --indigo3: #4a044e;
+      --purple:  #c026d3;
+      --indigo-light: #f0d4f5;
+      --indigo-pale:  #fdf4ff;
+      --text:       #1a001c;
+      --text-mid:   #374151;
+      --text-light: #6b7280;
+      --bg:     #fdf8ff;
+      --white:  #ffffff;
+      --border: #ead5ef;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,.06);
+      --shadow:    0 2px 12px rgba(0,0,0,.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.11);
+      --radius: 10px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; }
+
+    @media print {
+      .pdf-btn,nav,.hamburger,.mobile-menu{display:none!important;}
+      body{background:#fff;}
+    }
+
+    /* PDF BTN */
+    .pdf-btn {
+      position:fixed;bottom:22px;right:22px;z-index:999;
+      background:var(--indigo);color:#fff;border:none;border-radius:7px;
+      padding:11px 20px;font-size:13px;font-weight:600;
+      cursor:pointer;display:flex;align-items:center;gap:7px;
+      box-shadow:0 4px 16px rgba(162,28,175,.35);
+      transition:background .2s,transform .2s;
+    }
+    .pdf-btn:hover{background:var(--indigo2);transform:translateY(-2px);}
+
+    /* NAV */
+    nav {
+      position:sticky;top:0;z-index:100;
+      background:var(--white);
+      padding:0 28px;
+      display:flex;align-items:center;justify-content:space-between;
+      height:52px;
+      border-bottom:1px solid var(--border);
+      box-shadow:0 1px 8px rgba(0,0,0,.06);
+    }
+    .nav-brand{color:var(--indigo3);font-size:17px;font-weight:900;letter-spacing:-.3px;}
+    .nav-brand span{color:var(--indigo);}
+    .nav-links{display:flex;gap:4px;align-items:center;}
+    .nav-links a{color:var(--text-light);text-decoration:none;font-size:13px;padding:5px 12px;border-radius:5px;transition:all .2s;font-weight:500;}
+    .nav-links a:hover{color:var(--indigo);background:var(--indigo-pale);}
+    .nav-contact{
+      background:var(--indigo)!important;color:#fff!important;
+      font-weight:700!important;padding:7px 18px!important;
+      border-radius:6px!important;
+      box-shadow:0 2px 8px rgba(162,28,175,.3)!important;
+      transition:background .2s!important;
+    }
+    .nav-contact:hover{background:var(--indigo2)!important;color:#fff!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;display:block;transition:all .3s;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .mobile-menu{display:none;flex-direction:column;background:var(--white);padding:8px 20px 14px;border-bottom:1px solid var(--border);}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{color:var(--text-mid);text-decoration:none;font-size:14px;padding:10px 0;border-bottom:1px solid var(--border);}
+    .mobile-menu a:last-child{border:none;}
+    @media(max-width:640px){.nav-links{display:none;}.hamburger{display:flex;}}
+    @media(min-width:641px){.mobile-menu{display:none!important;}}
+
+    /* ===== HERO ===== */
+    .hero {
+      background:var(--bg);
+      min-height:340px;
+      display:flex;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid var(--border);
+    }
+    .hero-bg-text {
+      position:absolute;
+      font-size:160px;font-weight:900;
+      color:rgba(162,28,175,.04);
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      white-space:nowrap;letter-spacing:-5px;
+      pointer-events:none;user-select:none;
+    }
+    .accent-line {
+      position:absolute;top:0;left:0;width:4px;height:100%;
+      background:linear-gradient(to bottom,#6366f1,#a855f7,#ec4899);
+    }
+    .hero-content {
+      padding:52px 48px 90px 56px;
+      flex:1;
+      display:flex;flex-direction:column;justify-content:center;
+      position:relative;z-index:2;
+    }
+    .greeting {
+      font-size:12px;letter-spacing:4px;text-transform:uppercase;
+      color:#9ca3af;margin-bottom:10px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .greeting::before{content:'';width:28px;height:2px;background:var(--indigo);border-radius:2px;}
+    .big-name {
+      font-size:clamp(2.2rem,5vw,3.4rem);
+      font-weight:900;line-height:1.05;
+      color:var(--text);margin-bottom:8px;
+      letter-spacing:-1px;
+    }
+    .big-name span {
+      background:linear-gradient(90deg,var(--indigo),var(--purple));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .role-line {
+      font-size:12px;color:var(--text-light);
+      letter-spacing:2px;text-transform:uppercase;
+      margin-bottom:22px;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    .role-line span{color:var(--indigo);font-weight:700;}
+    .hero-desc {
+      font-size:14px;color:var(--text-light);
+      line-height:1.8;max-width:400px;margin-bottom:28px;
+    }
+    .hero-btns-new{display:flex;gap:10px;flex-wrap:wrap;}
+    .hbtn-main {
+      background:linear-gradient(135deg,var(--indigo),var(--purple));
+      color:#fff;border:none;padding:11px 28px;
+      border-radius:7px;font-size:13px;font-weight:700;
+      cursor:pointer;letter-spacing:.5px;
+      box-shadow:0 4px 16px rgba(162,28,175,.3);
+      text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+      transition:transform .2s,box-shadow .2s;
+    }
+    .hbtn-main:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(162,28,175,.4);}
+    .hbtn-sec {
+      background:var(--white);color:var(--text-mid);
+      border:1.5px solid var(--border);
+      padding:11px 28px;border-radius:7px;
+      font-size:13px;font-weight:600;
+      text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+      box-shadow:var(--shadow-sm);
+      transition:border-color .2s,color .2s,transform .2s;
+    }
+    .hbtn-sec:hover{border-color:var(--indigo);color:var(--indigo);transform:translateY(-2px);}
+
+    /* hero visual — right */
+    .hero-visual {
+      width:300px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      position:relative;z-index:2;padding:32px;
+    }
+    .dots-grid{position:absolute;top:22px;right:22px;display:grid;grid-template-columns:repeat(5,6px);gap:5px;}
+    .dot-item{width:6px;height:6px;border-radius:50%;background:rgba(162,28,175,.15);}
+    .visual-card{width:200px;height:200px;position:relative;}
+    .ring{
+      position:absolute;inset:0;border-radius:50%;
+      border:1.5px solid rgba(162,28,175,.2);
+      animation:spin 12s linear infinite;
+    }
+    .ring::before{
+      content:'';position:absolute;top:-4px;left:50%;
+      width:8px;height:8px;border-radius:50%;
+      background:var(--indigo);transform:translateX(-50%);
+      box-shadow:0 0 12px rgba(162,28,175,.5);
+    }
+    .ring2{
+      position:absolute;inset:20px;border-radius:50%;
+      border:1.5px solid rgba(192,38,211,.15);
+      animation:spin 18s linear infinite reverse;
+    }
+    .ring2::before{
+      content:'';position:absolute;bottom:-4px;left:50%;
+      width:6px;height:6px;border-radius:50%;
+      background:var(--purple);transform:translateX(-50%);
+      box-shadow:0 0 10px rgba(192,38,211,.4);
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .center-mono{
+      position:absolute;inset:38px;border-radius:50%;
+      background:linear-gradient(135deg,var(--indigo),var(--purple));
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      box-shadow:0 8px 32px rgba(162,28,175,.3);
+    }
+    .mono-init{font-size:28px;font-weight:900;color:#fff;letter-spacing:2px;}
+    .mono-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:2px;}
+
+    /* hero stats bar */
+    .hero-stats-bar{
+      position:absolute;bottom:0;left:0;right:0;
+      background:var(--white);
+      border-top:1px solid var(--border);
+      display:flex;z-index:3;
+      box-shadow:0 -2px 8px rgba(0,0,0,.04);
+    }
+    .hsbar{flex:1;padding:12px 0;text-align:center;border-right:1px solid var(--border);}
+    .hsbar:last-child{border-right:none;}
+    .hsbar-n{font-size:1.2rem;font-weight:900;color:var(--indigo3);}
+    .hsbar-l{font-size:10px;color:#9ca3af;letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
+
+    @media(max-width:680px){
+      .hero{flex-direction:column;}
+      .hero-visual{display:none;}
+      .hero-content{padding:36px 24px 80px;}
+    }
+
+    /* ===== PAGE ===== */
+    .page{max-width:1040px;margin:0 auto;padding:44px 16px;}
+    @media(min-width:600px){.page{padding:52px 24px;}}
+    .two-col{display:grid;grid-template-columns:1fr;}
+    @media(min-width:700px){.two-col{grid-template-columns:1fr 1fr;gap:24px;}}
+
+    /* SEC HEAD */
+    .sec-head{
+      display:flex;align-items:center;gap:12px;
+      font-size:clamp(13px,3.5vw,15px);
+      font-weight:800;color:var(--indigo3);
+      margin-bottom:18px;padding-bottom:12px;
+      border-bottom:2px solid var(--border);
+      text-transform:uppercase;letter-spacing:1.5px;
+    }
+    .sec-head .bar{width:3px;height:18px;background:linear-gradient(to bottom,var(--indigo),var(--purple));flex-shrink:0;border-radius:2px;}
+    .sec-wrap{margin-bottom:42px;}
+
+    /* CARD */
+    .card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm);padding:22px;}
+
+    /* ABOUT */
+    .objective-box{
+      background:var(--white);border-radius:var(--radius);
+      border:1px solid var(--border);
+      border-left:4px solid var(--indigo);
+      padding:20px 24px;
+      font-size:clamp(13.5px,3.5vw,15px);
+      line-height:1.85;color:var(--text-mid);
+      box-shadow:var(--shadow-sm);
+    }
+
+    /* SERVICES */
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+    .service-card{
+      background:var(--white);border:1px solid var(--border);
+      border-radius:var(--radius);padding:22px;
+      box-shadow:var(--shadow-sm);
+      transition:box-shadow .25s,transform .25s;
+      border-top:3px solid var(--indigo);
+    }
+    .service-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+    .service-icon{font-size:28px;margin-bottom:12px;display:block;}
+    .service-card h3{font-size:15px;font-weight:700;margin-bottom:7px;color:var(--indigo3);}
+    .service-card p{font-size:13px;color:var(--text-light);line-height:1.7;margin-bottom:14px;}
+    .service-tags{display:flex;flex-wrap:wrap;gap:5px;}
+    .stag{background:var(--indigo-pale);border:1px solid #c7d2fe;border-radius:4px;padding:2px 9px;font-size:11px;color:var(--indigo2);font-weight:600;}
+
+    /* EDUCATION */
+    .edu-row{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--border);}
+    .edu-row:first-child{padding-top:0;}
+    .edu-row:last-child{border-bottom:none;padding-bottom:0;}
+    .edu-ico{width:40px;height:40px;border-radius:8px;flex-shrink:0;background:var(--indigo-pale);display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .edu-row h3{font-size:clamp(13px,3.5vw,14px);font-weight:700;line-height:1.4;color:var(--text);}
+    .edu-row p{font-size:12px;color:var(--text-light);margin-top:2px;}
+    .pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px;}
+    .pill-green{background:#dcfce7;color:#15803d;}
+    .pill-blue{background:var(--indigo-pale);color:var(--indigo2);}
+
+    /* SKILLS */
+    .skill-group{margin-bottom:15px;}
+    .skill-group:last-child{margin-bottom:0;}
+    .skill-group h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:8px;}
+    .tags{display:flex;flex-wrap:wrap;gap:6px;}
+    .tag{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:5px 12px;font-size:12px;color:var(--text-mid);transition:all .18s;cursor:default;font-weight:500;}
+    .tag:hover{background:var(--indigo-pale);border-color:#a5b4fc;color:var(--indigo2);}
+    .tag.hi{background:var(--indigo);color:#fff;border-color:var(--indigo);font-weight:600;}
+    .wd-note{background:var(--indigo-pale);border:1px solid #c7d2fe;border-radius:6px;padding:9px 13px;margin-top:9px;font-size:12px;color:var(--indigo2);line-height:1.6;}
+
+    /* PROJECTS */
+    .proj-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:20px;overflow:hidden;transition:box-shadow .25s,transform .25s;}
+    .proj-card:last-child{margin-bottom:0;}
+    .proj-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+    .proj-top{background:linear-gradient(135deg,var(--indigo3) 0%,var(--indigo2) 100%);padding:18px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+    .proj-left{display:flex;align-items:center;gap:13px;}
+    .proj-ico{width:44px;height:44px;border-radius:8px;flex-shrink:0;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .proj-title h3{font-size:clamp(13px,3.5vw,15px);font-weight:700;color:#fff;}
+    .proj-title p{font-size:11.5px;color:rgba(255,255,255,.5);margin-top:2px;}
+    .proj-links{display:flex;gap:7px;flex-wrap:wrap;}
+    .proj-link{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;border-radius:5px;padding:6px 13px;font-size:12px;font-weight:600;transition:background .2s;white-space:nowrap;}
+    .proj-link:hover{background:rgba(255,255,255,.25);}
+    .proj-body{padding:18px 22px;}
+    .proj-body ul{list-style:none;margin-bottom:14px;}
+    .proj-body ul li{font-size:13.5px;color:var(--text-mid);padding:4px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.6;}
+    .proj-body ul li::before{content:'▸';color:var(--indigo);flex-shrink:0;margin-top:2px;font-size:11px;}
+    .stack{display:flex;flex-wrap:wrap;gap:5px;}
+    .ptag{background:var(--indigo3);color:rgba(255,255,255,.85);border-radius:4px;padding:3px 10px;font-size:11px;font-weight:500;}
+
+    /* ACADEMIC */
+    .ac-list{list-style:none;}
+    .ac-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:13.5px;display:flex;align-items:center;gap:10px;color:var(--text-mid);}
+    .ac-list li:last-child{border-bottom:none;}
+    .ac-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--indigo);flex-shrink:0;}
+
+    /* SOFT SKILLS */
+    .soft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    @media(max-width:400px){.soft-grid{grid-template-columns:repeat(2,1fr);}}
+    .soft-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 8px;text-align:center;font-size:12px;font-weight:600;color:var(--text-mid);transition:all .2s;cursor:default;}
+    .soft-item:hover{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+    .soft-item em{font-size:18px;display:block;margin-bottom:5px;font-style:normal;}
+
+    /* LANGUAGES */
+    .lang-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+    .lang-row:last-child{margin-bottom:0;}
+    .lang-name{width:60px;font-size:13px;font-weight:700;color:var(--text-mid);flex-shrink:0;}
+    .lang-bar{flex:1;height:6px;background:var(--border);border-radius:4px;overflow:hidden;}
+    .lang-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--indigo),var(--purple));}
+    .lang-lvl{font-size:12px;color:var(--text-light);width:60px;text-align:right;flex-shrink:0;}
+
+    /* INTERESTS */
+    .int-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+    .int-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center;transition:all .2s;cursor:default;}
+    .int-item:hover{background:var(--indigo);color:#fff;border-color:var(--indigo);transform:translateY(-2px);}
+    .int-item em{font-size:20px;display:block;margin-bottom:5px;font-style:normal;}
+    .int-item p{font-size:12px;font-weight:600;color:inherit;}
+
+    /* SUMMARY */
+    .summary-card{
+      background:linear-gradient(135deg,var(--indigo3),var(--indigo2));
+      border-radius:var(--radius);padding:28px;
+    }
+    @media(min-width:600px){.summary-card{padding:32px 36px;}}
+    .summary-card p{font-size:clamp(13.5px,3.5vw,15px);line-height:1.85;color:rgba(255,255,255,.85);}
+    .ai-tip{margin-top:18px;padding:12px 16px;background:rgba(165,180,252,.15);border-left:3px solid #a5b4fc;border-radius:6px;font-size:13px;color:rgba(255,255,255,.8);}
+
+    /* CONTACT CTA */
+    .contact-cta{
+      background:linear-gradient(135deg,var(--indigo3),var(--indigo2));
+      border-radius:var(--radius);
+      padding:40px 28px;text-align:center;margin-bottom:40px;
+      box-shadow:0 8px 32px rgba(162,28,175,.2);
+    }
+    .contact-cta h2{font-size:clamp(1.2rem,4vw,1.7rem);font-weight:800;color:#fff;margin-bottom:8px;}
+    .contact-cta p{color:rgba(255,255,255,.65);font-size:14px;margin-bottom:24px;}
+    .cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+    .cta-white{background:#fff;color:var(--indigo2);text-decoration:none;padding:11px 26px;border-radius:7px;font-weight:700;font-size:13px;transition:opacity .2s,transform .2s;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+    .cta-white:hover{opacity:.93;transform:translateY(-1px);}
+    .cta-ghost{background:rgba(255,255,255,.1);color:#fff;text-decoration:none;padding:11px 26px;border-radius:7px;font-weight:600;font-size:13px;border:1px solid rgba(255,255,255,.22);transition:background .2s,transform .2s;display:inline-flex;align-items:center;gap:7px;}
+    .cta-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-1px);}
+
+    /* FOOTER */
+    footer{background:var(--indigo3);color:rgba(255,255,255,.4);text-align:center;padding:24px 20px;font-size:12.5px;}
+    footer span{color:#a5b4fc;font-weight:600;}
+    footer a{color:rgba(255,255,255,.4);text-decoration:none;}
+    footer a:hover{color:#fff;}
+  </style>
+</head>
+<body>
+
+<button class="pdf-btn" onclick="window.print()">&#128196; Save as PDF</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Muneeba<span>.</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact-section">Contact</a>
+    <a href="mailto:muneeba.saeed2807@gmail.com" class="nav-contact">Contact Me</a>
+  </div>
+  <button class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="mailto:muneeba.saeed2807@gmail.com" onclick="closeMenu()">Contact Me</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="accent-line"></div>
+  <div class="hero-bg-text">DEV</div>
+
+  <div class="hero-content">
+    <div class="greeting">Hello, I'm</div>
+    <div class="big-name">Muneeba<br><span>Saeed.</span></div>
+    <div class="role-line"><span>Web Developer</span> &bull; PHP &bull; MySQL &bull; CS Student</div>
+    <p class="hero-desc">Full-Stack Developer building real-world web applications. Open to internship opportunities in Pakistan.</p>
+    <div class="hero-btns-new">
+      <a href="mailto:muneeba.saeed2807@gmail.com" class="hbtn-main">Hire Me</a>
+      <a href="#projects" class="hbtn-sec">View Projects</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="dots-grid">
+      <div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div>
+      <div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div>
+      <div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div>
+      <div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div>
+      <div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div><div class="dot-item"></div>
+    </div>
+    <div class="visual-card">
+      <div class="ring"></div>
+      <div class="ring2"></div>
+      <div class="center-mono">
+        <div class="mono-init">MS</div>
+        <div class="mono-sub">Dev</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats-bar" id="contact">
+    <div class="hsbar"><div class="hsbar-n">2</div><div class="hsbar-l">Live Projects</div></div>
+    <div class="hsbar"><div class="hsbar-n">5+</div><div class="hsbar-l">Technologies</div></div>
+    <div class="hsbar"><div class="hsbar-n">3rd</div><div class="hsbar-l">Year BSCS</div></div>
+    <div class="hsbar"><div class="hsbar-n">100%</div><div class="hsbar-l">Dedication</div></div>
+  </div>
+</section>
+
+<div class="page">
+
+  <!-- SERVICES -->
+  <div class="sec-wrap" id="services">
+    <div class="sec-head"><span class="bar"></span> What I Can Do For You</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">&#127760;</span>
+        <h3>Responsive Website Development</h3>
+        <p>Build clean, mobile-friendly websites that look great on any device — phone, tablet, or desktop.</p>
+        <div class="service-tags"><span class="stag">HTML5</span><span class="stag">CSS3</span><span class="stag">JavaScript</span><span class="stag">Responsive</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#9881;&#65039;</span>
+        <h3>PHP &amp; MySQL Web Apps</h3>
+        <p>Develop full-stack web applications with login systems, admin dashboards, and database management.</p>
+        <div class="service-tags"><span class="stag">PHP</span><span class="stag">MySQL</span><span class="stag">CRUD</span><span class="stag">Admin Panel</span></div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">&#128247;</span>
+        <h3>Landing Page Design</h3>
+        <p>Create attractive, professional landing pages for businesses, products, or personal brands.</p>
+        <div class="service-tags"><span class="stag">UI Design</span><span class="stag">HTML/CSS</span><span class="stag">SEO-ready</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="sec-wrap">
+    <div class="sec-head"><span class="bar"></span> About Me</div>
+    <div class="objective-box">
+      Motivated Computer Science student in my 3rd year with a strong passion for Web Development. I build responsive, full-stack web applications using PHP, MySQL, and modern frontend technologies. With 2 live deployed projects, I bring both academic knowledge and practical experience. Seeking internship opportunities to grow and contribute to real-world projects.
+    </div>
+  </div>
+
+  <!-- EDUCATION + SKILLS -->
+  <div class="two-col" id="skills">
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Education</div>
+      <div class="card">
+        <div class="edu-row">
+          <div class="edu-ico">&#127891;</div>
+          <div>
+            <h3>Bachelor of Science in Computer Science (BSCS)</h3>
+            <p>3rd Year &nbsp;&middot;&nbsp; Expected Graduation: 2028</p>
+            <span class="pill pill-blue">&#9679; In Progress</span>
+          </div>
+        </div>
+        <div class="edu-row">
+          <div class="edu-ico">&#128218;</div>
+          <div>
+            <h3>Intermediate &mdash; F.Sc / ICS</h3>
+            <p>Riphah International Group of Colleges</p>
+            <span class="pill pill-green">&#10003; Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Technical Skills</div>
+      <div class="card">
+        <div class="skill-group">
+          <h4>Web Development</h4>
+          <div class="tags"><span class="tag hi">Web Development</span></div>
+          <div class="wd-note"><strong>Frontend:</strong> Building responsive interfaces using HTML5, CSS3 &amp; JavaScript — clean UI, interactive elements, mobile-friendly layouts.</div>
+        </div>
+        <div class="skill-group">
+          <h4>Backend &amp; Database</h4>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Backend Integration</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Programming Languages</h4>
+          <div class="tags"><span class="tag">C++</span><span class="tag">Python</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Concepts</h4>
+          <div class="tags"><span class="tag">OOP</span><span class="tag">Database Management</span><span class="tag">Responsive Design</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="sec-wrap" id="projects">
+    <div class="sec-head"><span class="bar"></span> Live Projects</div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-left">
+          <div class="proj-ico">&#127856;</div>
+          <div class="proj-title"><h3>Cake Ordering Website</h3><p>Full-Stack Web Application &nbsp;&middot;&nbsp; PHP &amp; MySQL</p></div>
+        </div>
+        <div class="proj-links">
+          <a class="proj-link" href="http://muneeba-dev.atwebpages.com/cake/index.php" target="_blank" rel="noopener">&#128279; View Live</a>
+          <a class="proj-link" href="http://muneeba-dev.atwebpages.com/cake/demo_login.php" target="_blank" rel="noopener">&#9881;&#65039; Admin</a>
+        </div>
+      </div>
+      <div class="proj-body">
+        <ul>
+          <li>Designed and developed a complete responsive bakery ordering website with full frontend and backend.</li>
+          <li>Built product gallery, cake menu, customer reviews, and online order management system.</li>
+          <li>Developed admin dashboard for managing cakes, orders, inventory, messages, and team.</li>
+          <li>Implemented user authentication (register/login/logout) with session management.</li>
+          <li>Integrated WhatsApp widget for real-time customer communication.</li>
+        </ul>
+        <div class="stack"><span class="ptag">Web Development</span><span class="ptag">PHP</span><span class="ptag">MySQL</span><span class="ptag">Admin Dashboard</span><span class="ptag">Session Auth</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-left">
+          <div class="proj-ico">&#128221;</div>
+          <div class="proj-title"><h3>Quiz Management System</h3><p>Web-Based Academic Project &nbsp;&middot;&nbsp; PHP &amp; MySQL</p></div>
+        </div>
+        <div class="proj-links">
+          <a class="proj-link" href="http://muneebasaeed-dev.atwebpages.com/index.php" target="_blank" rel="noopener">&#128279; View Live</a>
+          <a class="proj-link" href="http://muneebasaeed-dev.atwebpages.com/dashboard.php" target="_blank" rel="noopener">&#9881;&#65039; Dashboard</a>
+        </div>
+      </div>
+      <div class="proj-body">
+        <ul>
+          <li>Developed a fully functional web-based quiz management system for academic use.</li>
+          <li>Implemented quiz flow: user login, question navigation, save answers, and final result.</li>
+          <li>Built dashboard for managing quizzes, questions, and user data.</li>
+          <li>Applied normalized database design for efficient quiz data storage and retrieval.</li>
+        </ul>
+        <div class="stack"><span class="ptag">Web Development</span><span class="ptag">PHP</span><span class="ptag">MySQL</span><span class="ptag">CRUD Operations</span><span class="ptag">Session Auth</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACADEMIC + SOFT SKILLS -->
+  <div class="two-col">
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Academic Knowledge</div>
+      <div class="card">
+        <ul class="ac-list">
+          <li>Data Structures &amp; Algorithms</li>
+          <li>Object-Oriented Programming</li>
+          <li>Database Systems</li>
+          <li>Software Development Fundamentals</li>
+          <li>Web Technologies</li>
+          <li>AI &amp; Machine Learning Basics</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Soft Skills</div>
+      <div class="card">
+        <div class="soft-grid">
+          <div class="soft-item"><em>&#129513;</em>Problem Solving</div>
+          <div class="soft-item"><em>&#129309;</em>Teamwork</div>
+          <div class="soft-item"><em>&#128172;</em>Communication</div>
+          <div class="soft-item"><em>&#9200;</em>Time Management</div>
+          <div class="soft-item"><em>&#9889;</em>Quick Learner</div>
+          <div class="soft-item"><em>&#127919;</em>Goal-Oriented</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANGUAGES + INTERESTS -->
+  <div class="two-col">
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Languages</div>
+      <div class="card">
+        <div class="lang-row"><span class="lang-name">English</span><div class="lang-bar"><div class="lang-fill" style="width:80%"></div></div><span class="lang-lvl">Proficient</span></div>
+        <div class="lang-row"><span class="lang-name">Urdu</span><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div><span class="lang-lvl">Native</span></div>
+      </div>
+    </div>
+    <div class="sec-wrap">
+      <div class="sec-head"><span class="bar"></span> Interests</div>
+      <div class="card">
+        <div class="int-grid">
+          <div class="int-item"><em>&#127760;</em><p>Web Development</p></div>
+          <div class="int-item"><em>&#129302;</em><p>AI &amp; ML</p></div>
+          <div class="int-item"><em>&#128187;</em><p>Software Dev</p></div>
+          <div class="int-item"><em>&#127912;</em><p>UI/UX Design</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sec-wrap">
+    <div class="sec-head"><span class="bar"></span> Professional Summary</div>
+    <div class="summary-card">
+      <p>Computer Science student (3rd Year) with hands-on experience in Web Development using PHP, MySQL, and modern frontend technologies. Successfully built and deployed two live full-stack web applications — a Cake Ordering Website with admin dashboard and a Quiz Management System — demonstrating strong skills in backend integration, database design, and responsive UI. Passionate about clean code and problem-solving. Actively seeking internship opportunities.</p>
+      <div class="ai-tip">&#128161; <strong>AI/ML Readiness:</strong> Basic understanding of AI and Machine Learning concepts with Python experience — ready to contribute to AI internship roles.</div>
+    </div>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <div class="contact-cta" id="contact-section">
+    <h2>Let's Work Together</h2>
+    <p>Looking for a dedicated web developer? I'm available for internships and projects.</p>
+    <div class="cta-btns">
+      <a href="mailto:muneeba.saeed2807@gmail.com" class="cta-white">&#9993; Send Email</a>
+      <a href="tel:+923110044606" class="cta-ghost">&#9990; Call Me</a>
+      <a href="https://www.linkedin.com/in/muneeba-saeed-ba7278385" target="_blank" rel="noopener" class="cta-ghost">&#128279; LinkedIn</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 <span>Muneeba Saeed</span> &nbsp;&bull;&nbsp; Web Developer &nbsp;&bull;&nbsp; Pakistan</p>
+  <p style="margin-top:6px;">
+    <a href="mailto:muneeba.saeed2807@gmail.com">muneeba.saeed2807@gmail.com</a> &nbsp;&bull;&nbsp;
+    <a href="https://www.linkedin.com/in/muneeba-saeed-ba7278385" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+</footer>
+
+<script>
+  function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); document.getElementById('ham').classList.toggle('open'); }
+  function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); document.getElementById('ham').classList.remove('open'); }
+</script>
+</body>
+</html>
